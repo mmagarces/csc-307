@@ -13,5 +13,13 @@
   ],
   "devDependencies": {
     "nodemon": "^3.1.14"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mmagarces/csc-307.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mmagarces/csc-307/issues"
+  },
+  "homepage": "https://github.com/mmagarces/csc-307#readme"
 }
