@@ -28,9 +28,26 @@ function MyApp() {
       });
   }, []);
 
-  function updateList(person) {
-  setCharacters([...characters, person]);
-  }
+  
+function postUser(person) {
+  const promise = fetch("Http://localhost:8000/users", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(person),
+  });
+
+  return promise;
+}
+
+function updateList(person) {
+  postUser(person)
+    .then(() => setCharacters([...characters, person]))
+    .catch((error) => {
+      console.log(error);
+    });
+}
 
   return (
   <div className="container">
