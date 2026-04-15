@@ -91,24 +91,29 @@ const deleteUserById = (id) => {  //Here we should use find index instead of fin
 app.delete("/users/:id", (req, res) => {
   const id = req.params.id;
   const deletedUser = deleteUserById(id);
+
   if (deletedUser === null) {
     res.status(404).send("User not found");
   } else {
-    res.send(deletedUser);
+    res.status(204).send();
   }
 });
 
 
-
 const addUser = (user) => {
+  const id = Math.floor(Math.random() * 10000).toString();
+  user.id = id;
+
+
   users["users_list"].push(user);
   return user;
 };
 
 app.post("/users", (req, res) => {
   const userToAdd = req.body;
-  addUser(userToAdd);
-  res.send();
+  const newUser = addUser(userToAdd);
+
+  res.status(201).json(newUser);
 });
 
 app.listen(port, () => {

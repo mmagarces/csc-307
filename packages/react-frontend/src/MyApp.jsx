@@ -6,11 +6,23 @@ import Form from "./Form";
 function MyApp() {
   const [characters, setCharacters] = useState([]);
 
-  function removeOneCharacter(index) {
-    const updated = characters.filter((character, i) => {
-      return i !== index;
-    });
-    setCharacters(updated);
+  function removeOneCharacter(id) {
+    console.log("Clicked delete:", id);
+
+    fetch(`http://localhost:8000/users/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => {
+        console.log("STATUS:", res.status);
+        if (res.status === 204) {//prev here is used to see the latest state of react
+          setCharacters((prev) =>//Without it, for some reason, updates dont show in real time on frontend
+            prev.filter((c) => c.id !== id)
+          );
+        } else {
+          console.log("Delete failed");
+        }
+      })
+      .catch(console.log);
   }
 
   //New func IE3
@@ -28,9 +40,9 @@ function MyApp() {
       });
   }, []);
 
-  
+//new func
 function postUser(person) {
-  const promise = fetch("Http://localhost:8000/users", {
+  const promise = fetch("http://localhost:8000/users", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -40,16 +52,19 @@ function postUser(person) {
 
   return promise;
 }
-
+//modified func
 function updateList(person) {
   postUser(person)
-    .then(() => setCharacters([...characters, person]))
+    .then((res) => res.json())
+    .then((newUser) => {
+      setCharacters([...characters, newUser]);
+    })
     .catch((error) => {
       console.log(error);
     });
 }
 
-  return (
+return (
   <div className="container">
     <Table
       characterData={characters}
