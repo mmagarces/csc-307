@@ -55,9 +55,18 @@ function postUser(person) {
 //modified func
 function updateList(person) {
   postUser(person)
-    .then((res) => res.json())
+    .then((res) => {
+      if (res.status === 201) { //If 201 status, or success
+        return res.json();
+      } else {
+        console.log("Create failed:", res.status);
+        return null;
+      }
+    }) //on success then do, (quiz 2 last answer :/)
     .then((newUser) => {
-      setCharacters([...characters, newUser]);
+      if (newUser) {
+        setCharacters((prev) => [...prev, newUser]);
+      }
     })
     .catch((error) => {
       console.log(error);

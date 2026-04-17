@@ -104,6 +104,11 @@ const addUser = (user) => {
   const id = Math.floor(Math.random() * 10000).toString();
   user.id = id;
 
+  const newUser = { //reformat to fit preivous data format
+    id,
+    name: user.name,
+    job: user.job
+  };
 
   users["users_list"].push(user);
   return user;
