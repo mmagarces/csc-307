@@ -16,7 +16,7 @@ function MyApp() {
         console.log("STATUS:", res.status);
         if (res.status === 204) {//prev here is used to see the latest state of react
           setCharacters((prev) =>//Without it, for some reason, updates dont show in real time on frontend
-            prev.filter((c) => c.id !== id)
+            prev.filter((c) => c._id !== id)
           );
         } else {
           console.log("Delete failed");
